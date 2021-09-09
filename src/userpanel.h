@@ -102,9 +102,11 @@
 //-----------------------------------
 // STATE OF GAME
 //-----------------------------------
-#define STOPPED 0						// game reset or never begin
-#define RUNNING 1						// game is running
-#define PAUSED	2						// game is in pause
+enum GAME_STATE {
+	STOPPED,			// game is stopped
+	RUNNING,			// game is running
+	PAUSED				// game is paused
+};
 
 struct pstate {							// panel state structure
 	int 	ball_positioned;			// ball is positioned in map

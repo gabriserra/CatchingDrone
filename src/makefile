@@ -1,36 +1,54 @@
 #--------------------------------------------------- 
 # Target file to be compiled by default
 #---------------------------------------------------
-MAIN = main
+MAIN = sim
+
 #---------------------------------------------------
 # CC will be the compiler to use
 #---------------------------------------------------
 CC = gcc
+
 #---------------------------------------------------
 # CFLAGS will be the options passed to the compiler
 #---------------------------------------------------
-CFLAGS = -Wall -lpthread -lrt
+CFLAGS = -Wall
+DBGFLAGS = -g -O0
+
 #---------------------------------------------------
 # LDFLAGS will be the modules loaded
 #---------------------------------------------------
-LDFLAGS = -L/usr/lib/x86_64-linux-gnu -lalleg -lm -pthread
+LDFLAGS = -L/usr/lib/x86_64-linux-gnu -lalleg -lm -lretif -lpthread
+
+#--------------------------------------------------- 
+# Target-specific variables
+#---------------------------------------------------
+debug: CFLAGS += $(DBGFLAGS)
+
 #--------------------------------------------------- 
 # Dependencies 
 #---------------------------------------------------
-$(MAIN): $(MAIN).o ptask.o physics.o userpanel.o udp.o
-	$(CC) $(CFLAGS) -o $(MAIN) $(MAIN).o ptask.o physics.o userpanel.o udp.o $(LDFLAGS)
-	
-$(MAIN).o: $(MAIN).c 
-	$(CC) -c $(MAIN).c
 
-ptask.o: ptask.c
-	$(CC) -c ptask.c
+all: $(MAIN)
+
+debug: all
+
+$(MAIN): main.o task.o physics.o userpanel.o udp.o
+	$(CC) $(CFLAGS) -o $(MAIN) main.o task.o physics.o userpanel.o udp.o $(LDFLAGS)
+	
+main.o: main.c 
+	$(CC) $(CFLAGS) -I/usr/include/lib -c main.c
+
+task.o: task.c
+	$(CC) $(CFLAGS) -c task.c
 	
 physics.o: physics.c
-	$(CC) -c physics.c
+	$(CC) $(CFLAGS) -c physics.c
 
 userpanel.o: userpanel.c
-	$(CC) -c userpanel.c
+	$(CC) $(CFLAGS) -c userpanel.c
 	
 udp.o: udp.c
-	$(CC) -c udp.c
+	$(CC) $(CFLAGS) -c udp.c
+
+clean:
+	rm -rf *.o sim
