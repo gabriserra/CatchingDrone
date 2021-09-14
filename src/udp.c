@@ -1,6 +1,14 @@
 #include "udp.h"
 #include <string.h>
 #include <arpa/inet.h>
+#include <time.h>
+#include <stdio.h>
+
+#define MAX_PACKET_SIZE 300
+#define PACKET_STRUCT_JSON "{ \"ts\": %ld, \"dronePos\": [%f, %f, %f], \"droneAng\": [%f, %f, %f], \"droneVel\": [%f, %f, %f], \"ballPos\": [%f, %f, %f], \"ballVel\": [%f, %f, %f] }"
+#define X 0
+#define Y 1
+#define Z 2
 
 //--------------------------------
 // PRIVATE: UDP MANAGMENT FUNCTIONS
@@ -77,21 +85,19 @@ int udp_init(char* ip_address, unsigned short udp_port) {
 // float* b_pos: pointer to Vector[3] that contains ball lin position
 // return: int - num of byte sent in case of success, -1 otherwise
 // ---
-int udp_grap_send(int sock, float* d_lin_pos, float* d_ang_pos, float* b_pos) {
-    struct udp_graph_data {
-	    float   d_lin_pos[SP_DIM]; 	// drone linear position
-	    float   d_ang_pos[SP_DIM]; 	// drone angular position
-	    float   b_pos[SP_DIM]; 		// ball linear position
-    }; 
-    
-    int     i;                      // array index [0-SP_DIM]
-    struct  udp_graph_data data;    // data to be sended
-    
-    for(i = 0; i < SP_DIM; i++) {
-        data.d_lin_pos[i] = d_lin_pos[i];
-        data.d_ang_pos[i] = d_ang_pos[i];
-        data.b_pos[i] = b_pos[i];
-    }
+int udp_grap_send(int sock, float* d_lin_pos, float* d_ang_pos, float* d_lin_vel, float* b_pos, float* b_vel) {
+    char packet[MAX_PACKET_SIZE];
 
-	return udp_send(sock, &data, sizeof(struct udp_graph_data));	
+    sprintf(
+        packet,
+        PACKET_STRUCT_JSON,
+        time(NULL),
+        d_lin_pos[X], d_lin_pos[Y], d_lin_pos[Z],
+        d_ang_pos[X], d_ang_pos[Y], d_ang_pos[Z],
+        d_lin_vel[X], d_lin_vel[Y], d_lin_vel[Z],
+        b_pos[X], b_pos[Y], b_pos[Z],
+        b_vel[X], b_vel[Y], b_vel[Z]
+    );
+    
+	return udp_send(sock, &packet, strlen(packet));	
 }

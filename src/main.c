@@ -13,6 +13,7 @@
 #include <retif.h>
 #include <unistd.h>
 #include <sys/types.h>
+#include <string.h>
 #include "task.h" 
 #include "physics.h"
 #include "userpanel.h"
@@ -101,8 +102,9 @@ struct task tasks[] =
 //-----------------------------------------------------
 // UDP DESTINATION
 //-----------------------------------------------------
-#define DEST_IP "10.30.3.169"
-#define UDP_PORT 8000
+#define IP_SIZE 13
+#define UDP_PORT 8585
+char dest_ip[IP_SIZE];
 
 //-----------------------------------------------------
 // SIMULATION GLOBAL DATA STRUCTURES
@@ -146,15 +148,24 @@ void react_to_run(int prev_state);
 void react_to_pause(int prev_state);
 
 //---------------------------------------
-// ERROR MANAGEMENT AND LOGS
+// ERROR MANAGEMENT, LOGS and USAGES
 //---------------------------------------
 void err_exit(const char* msg, int errcode);
+void print_usage(char* argv0);
 
 //----------------------
 // MAIN FUNCTION
 //----------------------
 
-int main() {
+int main(int argc, char* argv[]) {
+
+	// arguments check
+	if (argc < 2)
+    {
+        print_usage(argv[0]);
+        exit(1);
+    }
+
 	// stuff init
 	tp_init();
 	mutex_init(&mutex_d);
@@ -162,6 +173,7 @@ int main() {
 	mutex_init(&mutex_b);
 	mutex_init(&mutex_p);
 	p_reset(&panel);
+	strncpy(dest_ip, argv[1], IP_SIZE);
 
 	// connect to the daemon via a UNIX socket
 	if (rtf_connect() < 0)
@@ -190,7 +202,7 @@ void* udp_task()
 	struct 	rtf_task *t;	// pointer to rtf task struct
 	int 	sock;			// descriptor of a socket
 	
-	sock = udp_init(DEST_IP, UDP_PORT);
+	sock = udp_init(dest_ip, UDP_PORT);
 
 	if (sock < 0)
 		err_exit("> Unable to open the socket connection\n", -1);
@@ -208,7 +220,8 @@ void* udp_task()
 		safe_copy(&mutex_b, &b_copy, &ball, sizeof(struct bstate));
 
 		udp_grap_send(
-			sock, d_copy.fx_lin_pos, d_copy.fx_ang_pos, b_copy.position
+			sock, d_copy.fx_lin_pos, d_copy.fx_ang_pos, d_copy.fx_lin_vel, 
+			b_copy.position, b_copy.velocity
 		);
 
 		rtf_task_wait_period(t);
@@ -251,6 +264,8 @@ void* panel_task()
 	}
 
 	exit_panel();
+
+	return NULL;
 }
 
 // ---
@@ -365,8 +380,6 @@ void* supervisor_task()
 	
 	t = &tasks[SPV_TASK].rtf_t;
 
-	int tid = gettid();
-	
 	if (rtf_task_attach(t, gettid()) != RTF_OK)
 		err_exit("> Unable to attach SUPERVISOR thread to RETIF\n", -1);
 
@@ -569,10 +582,17 @@ void react_to_pause(int prev_state) {
 }
 
 //---------------------------------------
-// ERROR MANAGEMENT AND LOGS
+// ERROR MANAGEMENT, LOGS and USAGES
 //---------------------------------------
+
 void err_exit(const char* msg, int errcode)
 {
 	printf("%s", msg);
 	exit(errcode);
+}
+
+void print_usage(char* argv0)
+{
+    printf("Usage: %s <ip> \n\n", argv0);
+    printf("Example: %s 127.0.0.1\n", argv0);
 }

@@ -11,7 +11,7 @@ CC = gcc
 #---------------------------------------------------
 # CFLAGS will be the options passed to the compiler
 #---------------------------------------------------
-CFLAGS = -Wall
+CFLAGS = -Wall -Wno-unused-function
 DBGFLAGS = -g -O0
 
 #---------------------------------------------------

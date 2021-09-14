@@ -15,7 +15,7 @@
 int udp_init(char* ip_address, unsigned short udp_port);
 
 // Send graphic data to connected UDP sock, return the num of byte sent or -1
-int udp_grap_send(int sock, float* d_lin_pos, float* d_ang_pos, float* b_pos);
+int udp_grap_send(int sock, float* d_lin_pos, float* d_ang_pos, float* d_lin_vel, float* b_pos, float* b_vel);
 
 #endif
 

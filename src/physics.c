@@ -4,6 +4,8 @@
 #include <string.h>
 #include <stdio.h>
 
+#define UNUSED_VAR(x) ((void) (x))
+
 //--------------------------------
 // PRIVATE: MATH UTILITIES
 //--------------------------------
@@ -86,6 +88,7 @@ static void d_calc_lin_acc(struct dstate* drone, float* fx_lin_acc) {
 	R[X] = sinf(theta);
 	R[Y] = sinf(phi) * cosf(theta);
 	R[Z] = cosf(theta) * cosf(phi);
+	UNUSED_VAR(psi);
 	
 	// fixed linear acc is the body frame thrust projected on axis 
 	fx_lin_acc[X] = ((T[Z] / DMASS) * R[X]);
@@ -128,6 +131,7 @@ static void d_calc_bd_ang_vel(struct dstate* drone) {
 	phi = drone->fx_ang_pos[X];
 	theta = drone->fx_ang_pos[Y];
 	psi = drone->fx_ang_pos[Z];
+	UNUSED_VAR(psi);
 
 	phi_dot = drone->fx_ang_vel[X];
 	theta_dot = drone->fx_ang_vel[Y];
@@ -158,6 +162,7 @@ static void d_calc_fx_ang_vel(struct dstate* drone) {
 	phi = drone->fx_ang_pos[X];
 	theta = drone->fx_ang_pos[Y];
 	psi = drone->fx_ang_pos[Z];
+	UNUSED_VAR(psi);
 	
 	// fixed ang velocity is calculated from ang velocity projected on axis
 	drone->fx_ang_vel[X] = 

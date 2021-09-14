@@ -1,2 +1,8 @@
+# Ignore object files
+*.o
 
+# Ignore MacOS folder files
 .DS_Store
+
+# Ignore main binary
+sim
