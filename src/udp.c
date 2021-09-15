@@ -1,8 +1,8 @@
 #include "udp.h"
 #include <string.h>
 #include <arpa/inet.h>
-#include <time.h>
 #include <stdio.h>
+#include <sys/time.h>
 
 #define MAX_PACKET_SIZE 300
 #define PACKET_STRUCT_JSON "{ \"ts\": %ld, \"dronePos\": [%f, %f, %f], \"droneAng\": [%f, %f, %f], \"droneVel\": [%f, %f, %f], \"ballPos\": [%f, %f, %f], \"ballVel\": [%f, %f, %f] }"
@@ -87,11 +87,17 @@ int udp_init(char* ip_address, unsigned short udp_port) {
 // ---
 int udp_grap_send(int sock, float* d_lin_pos, float* d_ang_pos, float* d_lin_vel, float* b_pos, float* b_vel) {
     char packet[MAX_PACKET_SIZE];
+    struct timeval tv;
+    long long ms; 
+    
+    
+    gettimeofday(&tv, NULL); // get current time
+    ms = tv.tv_sec * 1000LL + tv.tv_usec / 1000;
 
     sprintf(
         packet,
         PACKET_STRUCT_JSON,
-        time(NULL),
+        ms,
         d_lin_pos[X], d_lin_pos[Y], d_lin_pos[Z],
         d_ang_pos[X], d_ang_pos[Y], d_ang_pos[Z],
         d_lin_vel[X], d_lin_vel[Y], d_lin_vel[Z],
