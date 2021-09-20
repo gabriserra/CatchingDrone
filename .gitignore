@@ -6,3 +6,9 @@
 
 # Ignore main binary
 sim
+
+# Ignore node modules
+node_modules
+
+# Ignore "bundled" js
+public/javascripts/bundle.js
