@@ -1,0 +1,111 @@
+/* 
+----------------------
+FRONTEND PAGE CSS FILE 
+----------------------
+INDEX:
+    0 - General
+    1 - Navbar
+    2 - Elements (Cards, Canvas ...)
+    3 - Footer
+*/
+
+/* 
+// -----------------------
+// 0 - General
+// -----------------------
+*/
+
+body {
+  margin: 0;
+  font: 14px "Work Sans", sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+/* 
+// -----------------------
+// 1 - Navbar
+// -----------------------
+*/
+
+.nav-item {
+  font-weight: 600;
+}
+
+/* 
+// -----------------------
+// 2 - Elements
+// -----------------------
+*/
+
+.card {
+  box-shadow: 0 0 4px 4px #eee;
+  margin-top: 15px;
+}
+
+#card-figure {
+  padding: 15px;
+}
+
+#card-charts {
+  padding: 20px;
+}
+
+.first-row {
+  margin-top: 25px;
+}
+
+#scene {
+  overflow: hidden;
+}
+
+#scene {
+  max-height: 60vh;
+}
+
+#status-charts-divider {
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+/* 
+// -----------------------
+// 3 - Footer
+// -----------------------
+*/
+
+.bg-inverse {
+  background-color: #292b2c;
+}
+
+.container-footer {
+  margin-top: 50px;
+  padding: 100px 1rem;
+}
+
+.container-footer .col-sm-6 {
+  padding-left: 25px;
+  padding-right: 25px;
+}
+
+.title-footer {
+  font-size: 1rem;
+  letter-spacing: 0.15em;
+  font-family: 'Work Sans', sans-serif;
+  color: white;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.text-footer {
+  font-family: 'Work Sans', sans-serif;
+  color: rgba(255, 255, 255, .7);
+  font-weight: 300;
+  letter-spacing: -0.3px;
+}
+
+.text-footer a {
+  color: white;
+}

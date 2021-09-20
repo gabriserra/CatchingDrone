@@ -8,7 +8,7 @@
                 "debug"
             ],
             "options": {
-                "cwd": "${workspaceFolder}/src"
+                "cwd": "${workspaceFolder}/client"
             },
             "problemMatcher": [
                 "$gcc"

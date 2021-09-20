@@ -1,0 +1,31 @@
+doctype html
+html
+  head
+    title="Catching Drone - 3D Dashboard"
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel="icon" type="image/png" href="/images/favicon.png")
+  body
+    script(type='text/javascript' src="/javascripts/vector.js")
+    script(type='text/javascript' src="/javascripts/bundle.js")
+    script(type='text/javascript' src="/javascripts/scene.js")
+    script(type='text/javascript' src="/javascripts/canvas.js")
+    script(type='text/javascript' src="/javascripts/main.js")
+    
+    // header
+    nav.navbar.navbar-light.bg-light.navbar-expand-sm
+      include ./components/header.jade
+
+    // page full width row with 3 columns
+    div.container-fluid
+      div.row          
+        div.col-sm-8
+          div.card.first-row
+            include ./components/3d-scene.jade
+        div.col-sm-4
+          div.card.first-row
+            div.card-body#card-charts
+              include ./components/status-charts.jade
+
+    // footer
+    div.container-fluid.bg-inverse.container-footer
+      include ./components/footer.jade

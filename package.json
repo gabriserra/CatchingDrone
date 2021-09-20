@@ -1,0 +1,35 @@
+{
+  "name": "catching-drone",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "browserify resources/js/index.js -p esmify -g browserify-css -o public/javascripts/bundle.js",
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "@enable3d/phaser-extension": "^0.23.0",
+    "bootstrap": "^4.5.2",
+    "browserify": "^16.5.2",
+    "browserify-css": "^0.15.0",
+    "chart.js": "^2.9.3",
+    "chartjs-plugin-annotation": "^0.5.7",
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "enable3d": "^0.22",
+    "express": "~4.16.1",
+    "http-errors": "~1.6.3",
+    "jade": "~1.11.0",
+    "jquery": "^3.5.1",
+    "morgan": "~1.9.1",
+    "popper.js": "^1.16.1"
+  },
+  "devDependencies": {
+    "@types/matter-js": "^0.17.3",
+    "@types/three": "^0.127.1",
+    "esmify": "^2.1.1",
+    "matter-js": "^0.17.1",
+    "phaser": "^3.55.2",
+    "poly-decomp": "^0.3.0",
+    "three": "~0.129.0"
+  }
+}
