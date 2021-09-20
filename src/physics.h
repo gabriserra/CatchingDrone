@@ -40,7 +40,7 @@
 #define RXR 			1		// right rotor
 #define BXR 			2		// rear rotor
 #define LXR 			3		// left rotor
-#define B2D_DIST_Z		1.5		// ball to drone collision distance (z axis)
+#define B2D_DIST_Z		2.0		// ball to drone collision distance (z axis)
 #define B2D_DIST_XY		0.5		// ball to drone collision distance	(xy plan)	
 
 //-------------------------------------
