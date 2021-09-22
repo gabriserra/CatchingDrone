@@ -485,7 +485,7 @@ static void update_launch_box(struct pstate* panel) {
 	int 	drag;	// indicates if ball is draggable
 
 	buff = create_bitmap_buff(XWIN, YWIN, BKG);
-	drag = is_mouse_in_thbox() && is_mouse_in_ball(panel->launch_ball, BALLR);
+	drag = is_mouse_in_thbox(); //&& is_mouse_in_ball(panel->launch_ball, BALLR);
 
 	// if ball is draggable and user click with left mouse button
 	if(drag && get_mouse_left_click()) {
@@ -550,6 +550,7 @@ void init_panel() {
 	allegro_init(); 
 	install_keyboard();
 	install_mouse();
+	enable_hardware_cursor();
 	set_color_depth(VGA);
 	set_gfx_mode(GFX_AUTODETECT_WINDOWED, XWIN, YWIN, 0, 0); 
 	clear_to_color(screen, BKG);
