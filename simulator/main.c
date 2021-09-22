@@ -434,6 +434,14 @@ bool t_create(enum TASK_IDS id)
 	return (pthread_create(&tasks[id].ptid, NULL, tasks[id].start_routine, NULL) == 0);
 }
 
+void t_stop(enum TASK_IDS id)
+{
+	rtf_task_detach(&tasks[id].rtf_t);
+	rtf_task_release(&tasks[id].rtf_t);
+
+	pthread_cancel(tasks[id].ptid);
+}
+
 //-------------------------
 // START/STOP TASK FUNCTIONS
 //-------------------------
@@ -467,13 +475,13 @@ void task_start(bool udp, bool drone, bool ball, bool driver) {
 // ---
 void task_stop(bool udp, bool drone, bool ball, bool driver) {
 	if(udp)
-		pthread_cancel(tasks[UDP_TASK].ptid);
+		t_stop(UDP_TASK);
 	if(drone)
-		pthread_cancel(tasks[DRN_TASK].ptid);
+		t_stop(DRN_TASK);
 	if(ball)
-		pthread_cancel(tasks[BLL_TASK].ptid);
+		t_stop(BLL_TASK);
 	if(driver)
-		pthread_cancel(tasks[DRV_TASK].ptid); 
+		t_stop(DRV_TASK); 
 }
 
 //-------------------------

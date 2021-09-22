@@ -88,7 +88,7 @@ int udp_init(char* ip_address, unsigned short udp_port) {
 int udp_grap_send(int sock, float* d_lin_pos, float* d_ang_pos, float* d_lin_vel, float* b_pos, float* b_vel) {
     char packet[MAX_PACKET_SIZE];
     struct timeval tv;
-    long long ms; 
+    long ms; 
     
     
     gettimeofday(&tv, NULL); // get current time
